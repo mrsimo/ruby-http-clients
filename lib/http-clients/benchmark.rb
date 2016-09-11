@@ -3,10 +3,11 @@ require 'terminal-table'
 
 module HTTPClients
   class Benchmark
-    def initialize(endpoint, number:)
-      @endpoint = endpoint
-      @number   = number
-      @table    = Terminal::Table.new(
+    def initialize(endpoint, number:, persistent:)
+      @endpoint   = endpoint
+      @number     = number
+      @persistent = persistent
+      @table      = Terminal::Table.new(
         title: "#{number} requests against #{endpoint}",
         headings: [
           "",
@@ -46,7 +47,7 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :number, :table
+    attr_reader :endpoint, :number, :table, :persistent
 
     def clients
       [
