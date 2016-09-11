@@ -55,6 +55,7 @@ module HTTPClients
         TyphoeusClient.new(endpoint),
         RestClientClient.new(endpoint),
         HTTPClient.new(endpoint),
+        ExconClient.new(endpoint),
       ]
     end
 
