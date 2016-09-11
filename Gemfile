@@ -12,3 +12,4 @@ gem 'unicorn'
 # HTTP clients
 gem 'curb'
 gem 'typhoeus'
+gem 'rest-client'

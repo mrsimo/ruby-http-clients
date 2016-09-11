@@ -9,7 +9,7 @@ module HTTPClients
       @table    = Terminal::Table.new(
         title: "#{number} requests against #{endpoint}",
         headings: [
-          "", 
+          "",
           { value: "Average", alignment: :center },
           { value: "Total", alignment: :center },
           ""
@@ -35,9 +35,9 @@ module HTTPClients
         all_ok = responses.all? { |response| client.response_ok?(response) }
 
         table << [
-          client.name, 
+          client.name,
           { value: in_ms(total_time / number), alignment: :right },
-          { value: in_ms(total_time), alignment: :right }, 
+          { value: in_ms(total_time), alignment: :right },
           responses_ok(all_ok)]
       end
 
@@ -53,6 +53,7 @@ module HTTPClients
         NetHTTPClient.new(endpoint),
         CurbClient.new(endpoint),
         TyphoeusClient.new(endpoint),
+        RestClientClient.new(endpoint),
       ]
     end
 
