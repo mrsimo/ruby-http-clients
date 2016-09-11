@@ -54,6 +54,7 @@ module HTTPClients
         CurbClient.new(endpoint),
         TyphoeusClient.new(endpoint),
         RestClientClient.new(endpoint),
+        HTTPClient.new(endpoint),
       ]
     end
 
