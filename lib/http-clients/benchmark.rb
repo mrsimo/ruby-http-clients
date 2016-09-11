@@ -59,7 +59,7 @@ module HTTPClients
     end
 
     def in_ms(seconds)
-      "#{(seconds * 1000).round(2)}ms"
+      "#{'%.2f' % (seconds * 1000).round(2)}ms"
     end
 
     def responses_ok(ok)
