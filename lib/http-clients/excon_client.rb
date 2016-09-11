@@ -3,8 +3,9 @@ Excon.defaults[:ssl_verify_peer] = false
 
 module HTTPClients
   class ExconClient
-    def initialize(endpoint)
-      @endpoint = endpoint
+    def initialize(endpoint, persistent)
+      @endpoint   = endpoint
+      @persistent = persistent
     end
 
     def name
@@ -21,7 +22,7 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint
+    attr_reader :endpoint, :persistent
 
     def unsafe_context
       @unsafe_context ||= OpenSSL::SSL::SSLContext.new.tap do |context|

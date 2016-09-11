@@ -5,8 +5,9 @@ module HTTPClients
   class NetHTTPClient
     OK_STATUS = "200".freeze
 
-    def initialize(endpoint)
-      @endpoint = endpoint
+    def initialize(endpoint, persistent)
+      @endpoint   = endpoint
+      @persistent = persistent
       @uri      = URI.parse(endpoint)
       @ssl_mode = @uri.is_a?(URI::HTTPS)
     end
@@ -32,6 +33,6 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :uri, :ssl_mode
+    attr_reader :endpoint, :persistent, :uri, :ssl_mode
   end
 end

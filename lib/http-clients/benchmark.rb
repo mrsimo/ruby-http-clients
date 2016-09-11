@@ -51,12 +51,12 @@ module HTTPClients
 
     def clients
       [
-        NetHTTPClient.new(endpoint),
-        CurbClient.new(endpoint),
-        TyphoeusClient.new(endpoint),
-        RestClientClient.new(endpoint),
-        HTTPClient.new(endpoint),
-        ExconClient.new(endpoint),
+        NetHTTPClient.new(endpoint, persistent),
+        CurbClient.new(endpoint, persistent),
+        TyphoeusClient.new(endpoint, persistent),
+        RestClientClient.new(endpoint, persistent),
+        HTTPClient.new(endpoint, persistent),
+        ExconClient.new(endpoint, persistent),
       ]
     end
 

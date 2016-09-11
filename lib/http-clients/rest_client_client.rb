@@ -2,8 +2,9 @@ require 'rest-client'
 
 module HTTPClients
   class RestClientClient
-    def initialize(endpoint)
-      @endpoint = endpoint
+    def initialize(endpoint, persistent)
+      @endpoint   = endpoint
+      @persistent = persistent
     end
 
     def name
@@ -20,6 +21,6 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint
+    attr_reader :endpoint, :persistent
   end
 end

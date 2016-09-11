@@ -4,8 +4,9 @@ module HTTPClients
   class CurbClient
     OK_STATUS = "200 OK".freeze
 
-    def initialize(endpoint)
-      @endpoint = endpoint
+    def initialize(endpoint, persistent)
+      @endpoint   = endpoint
+      @persistent = persistent
     end
 
     def name
@@ -25,6 +26,6 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint
+    attr_reader :endpoint, :persistent
   end
 end
