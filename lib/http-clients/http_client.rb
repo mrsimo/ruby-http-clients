@@ -11,7 +11,7 @@ module HTTPClients
     end
 
     def run_once_persistent
-      persistent_connection.get("", ssl_context: unsafe_context).tap(&:flush)
+      persistent_connection.get(uri.path, ssl_context: unsafe_context).tap(&:flush)
     end
     alias run_once_parallel run_once_persistent
 
