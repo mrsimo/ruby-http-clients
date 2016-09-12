@@ -14,6 +14,7 @@ module HTTPClients
     def run_once
       RestClient::Resource.new(endpoint, verify_ssl: OpenSSL::SSL::VERIFY_NONE).get
     end
+    alias run_once_persistent run_once
 
     def response_ok?(response)
       response.code == 200

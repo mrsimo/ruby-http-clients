@@ -16,6 +16,10 @@ module HTTPClients
       Excon.get(endpoint)
     end
 
+    def run_once_persistent
+      persistent_connection.get
+    end
+
     def response_ok?(response)
       response.status == 200
     end
@@ -28,6 +32,10 @@ module HTTPClients
       @unsafe_context ||= OpenSSL::SSL::SSLContext.new.tap do |context|
         context.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
+    end
+
+    def persistent_connection
+      @persistent_connection ||= Excon.new(endpoint, persistent: true)
     end
   end
 end

@@ -14,6 +14,7 @@ module HTTPClients
     def run_once
       Typhoeus.get(endpoint, ssl_verifypeer: false)
     end
+    alias run_once_persistent run_once
 
     def response_ok?(response)
       response.code == 200

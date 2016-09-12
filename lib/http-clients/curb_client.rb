@@ -14,18 +14,29 @@ module HTTPClients
     end
 
     def run_once
-      Curl::Easy.new(endpoint).tap do |curl|
-        curl.ssl_verify_peer = false
-        curl.perform
-      end
+      curl = Curl::Easy.new(endpoint)
+      curl.ssl_verify_peer = false
+      curl.http_get
+      curl.status
+    end
+
+    def run_once_persistent
+      persistent_connection.ssl_verify_peer = false
+      persistent_connection.url = endpoint
+      persistent_connection.http_get
+      persistent_connection.status
     end
 
     def response_ok?(response)
-      response.status == OK_STATUS
+      response == OK_STATUS
     end
 
     private
 
     attr_reader :endpoint, :persistent
+
+    def persistent_connection
+      @persistent_connection ||= Curl::Easy.new
+    end
   end
 end

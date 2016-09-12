@@ -28,7 +28,11 @@ module HTTPClients
         total_time = ::Benchmark.realtime do
           number.times do
             times << ::Benchmark.realtime do
-              responses << client.run_once
+              if persistent
+                responses << client.run_once_persistent
+              else
+                responses << client.run_once
+              end
             end
           end
         end
