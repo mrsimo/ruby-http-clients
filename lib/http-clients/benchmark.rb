@@ -3,12 +3,13 @@ require 'terminal-table'
 
 module HTTPClients
   class Benchmark
-    def initialize(endpoint, number:, persistent:)
+    def initialize(endpoint, number:, persistent: false, parallel: false)
       @endpoint   = endpoint
       @number     = number
       @persistent = persistent
+      @parallel   = parallel
       @table      = Terminal::Table.new(
-        title: "#{number} requests against #{endpoint}",
+        title: title,
         headings: [
           "",
           { value: "Average", alignment: :center },
@@ -26,15 +27,21 @@ module HTTPClients
         all_ok    = false
 
         total_time = ::Benchmark.realtime do
+          client.setup_parallel if parallel
+
           number.times do
             times << ::Benchmark.realtime do
               if persistent
                 responses << client.run_once_persistent
+              elsif parallel
+                responses << client.run_once_parallel
               else
                 responses << client.run_once
               end
             end
           end
+
+          client.fire_parallel if parallel
         end
 
         all_ok = responses.all? { |response| client.response_ok?(response) }
@@ -51,17 +58,30 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :number, :table, :persistent
+    attr_reader :endpoint, :number, :table, :persistent, :parallel
 
     def clients
       [
-        NetHTTPClient.new(endpoint, persistent),
-        CurbClient.new(endpoint, persistent),
-        TyphoeusClient.new(endpoint, persistent),
-        RestClientClient.new(endpoint, persistent),
-        HTTPClient.new(endpoint, persistent),
-        ExconClient.new(endpoint, persistent),
+        NetHTTPClient.new(endpoint, persistent, parallel),
+        CurbClient.new(endpoint, persistent, parallel),
+        TyphoeusClient.new(endpoint, persistent, parallel),
+        RestClientClient.new(endpoint, persistent, parallel),
+        HTTPClient.new(endpoint, persistent, parallel),
+        ExconClient.new(endpoint, persistent, parallel),
       ]
+    end
+
+    def title
+      options =
+        if parallel
+          "in parallel "
+        elsif persistent
+          "with persistent connection "
+        else
+          ""
+        end
+
+      "#{number} requests #{options}against #{endpoint}"
     end
 
     def in_ms(seconds)

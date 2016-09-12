@@ -2,12 +2,7 @@ require 'excon'
 Excon.defaults[:ssl_verify_peer] = false
 
 module HTTPClients
-  class ExconClient
-    def initialize(endpoint, persistent)
-      @endpoint   = endpoint
-      @persistent = persistent
-    end
-
+  class ExconClient < BaseClient
     def name
       "Excon"
     end
@@ -19,14 +14,13 @@ module HTTPClients
     def run_once_persistent
       persistent_connection.get
     end
+    alias run_once_parallel run_once_persistent
 
     def response_ok?(response)
       response.status == 200
     end
 
     private
-
-    attr_reader :endpoint, :persistent
 
     def unsafe_context
       @unsafe_context ||= OpenSSL::SSL::SSLContext.new.tap do |context|

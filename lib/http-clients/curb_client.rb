@@ -1,13 +1,8 @@
 require 'curb'
 
 module HTTPClients
-  class CurbClient
+  class CurbClient < BaseClient
     OK_STATUS = "200 OK".freeze
-
-    def initialize(endpoint, persistent)
-      @endpoint   = endpoint
-      @persistent = persistent
-    end
 
     def name
       "Curb"
@@ -26,6 +21,7 @@ module HTTPClients
       persistent_connection.http_get
       persistent_connection.status
     end
+    alias run_once_parallel run_once_persistent
 
     def response_ok?(response)
       response == OK_STATUS
@@ -33,7 +29,7 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :persistent
+    attr_reader :endpoint, :persistent, :parallel
 
     def persistent_connection
       @persistent_connection ||= Curl::Easy.new

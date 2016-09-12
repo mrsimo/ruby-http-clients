@@ -10,16 +10,21 @@ require 'optparse'
 
 number     = 10
 persistent = false
+parallel   = false
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: bin/benchmark [options] URL"
 
-  opts.on("-n N", "--number N", Integer, "Run N requests") do |number|
-    number = number
+  opts.on("-n N", "--number N", Integer, "Run N requests") do |n|
+    number = n
   end
 
-  opts.on("-p", "--persistent", "Try to use a persistent connection if supported by the client") do
+  opts.on("--persistent", "Try to use a persistent connection if supported by the client") do
     persistent = true
+  end
+
+  opts.on("-p", "--parallel", "Try to fire requests in parallel") do
+    parallel = true
   end
 end
 
@@ -27,4 +32,4 @@ parser.parse!
 
 endpoint = parser.default_argv.first
 
-HTTPClients::Benchmark.new(endpoint, number: number, persistent: persistent).run
+HTTPClients::Benchmark.new(endpoint, number: number, persistent: persistent, parallel: parallel).run

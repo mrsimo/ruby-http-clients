@@ -1,18 +1,15 @@
 require 'net/http'
 require 'net/https'
+require 'net/http/persistent'
 
 module HTTPClients
-  class NetHTTPClient
+  class NetHTTPClient < BaseClient
     OK_STATUS = "200".freeze
 
-    def initialize(endpoint, persistent)
-      @endpoint   = endpoint
-      @persistent = persistent
+    def initialize(*)
+      super
       @uri      = URI.parse(endpoint)
       @ssl_mode = @uri.is_a?(URI::HTTPS)
-      if persistent
-        require 'net/http/persistent'
-      end
     end
 
     def name
@@ -33,6 +30,7 @@ module HTTPClients
     def run_once_persistent
       persistent_connection.request uri
     end
+    alias run_once_parallel run_once_persistent
 
     def response_ok?(response)
       response.code == OK_STATUS
@@ -40,7 +38,7 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :persistent, :uri, :ssl_mode
+    attr_reader :uri, :ssl_mode
 
     def persistent_connection
       @persistent_connection ||= begin
