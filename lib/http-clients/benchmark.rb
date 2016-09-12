@@ -3,11 +3,12 @@ require 'terminal-table'
 
 module HTTPClients
   class Benchmark
-    def initialize(endpoint, number:, persistent: false, parallel: false)
+    def initialize(endpoint, number:, persistent: false, parallel: false, client: nil)
       @endpoint   = endpoint
       @number     = number
       @persistent = persistent
       @parallel   = parallel
+      @client     = client
       @table      = Terminal::Table.new(
         title: title,
         headings: [
@@ -58,10 +59,10 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :number, :table, :persistent, :parallel
+    attr_reader :endpoint, :number, :table, :persistent, :parallel, :client
 
     def clients
-      [
+      clients = [
         NetHTTPClient.new(endpoint, persistent, parallel),
         CurbClient.new(endpoint, persistent, parallel),
         TyphoeusClient.new(endpoint, persistent, parallel),
@@ -69,6 +70,12 @@ module HTTPClients
         HTTPClient.new(endpoint, persistent, parallel),
         ExconClient.new(endpoint, persistent, parallel),
       ]
+
+      if client
+        clients.select! { |c| c.name == client }
+      end
+
+      clients
     end
 
     def title

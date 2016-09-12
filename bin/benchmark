@@ -11,6 +11,7 @@ require 'optparse'
 number     = 10
 persistent = false
 parallel   = false
+client     = nil
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: bin/benchmark [options] URL"
@@ -26,10 +27,20 @@ parser = OptionParser.new do |opts|
   opts.on("-p", "--parallel", "Try to fire requests in parallel") do
     parallel = true
   end
+
+  opts.on("--client CLIENT", String, "Run just one client") do |c|
+    client = c
+  end
 end
 
 parser.parse!
 
 endpoint = parser.default_argv.first
 
-HTTPClients::Benchmark.new(endpoint, number: number, persistent: persistent, parallel: parallel).run
+HTTPClients::Benchmark.new(
+  endpoint,
+  number: number,
+  persistent: persistent,
+  parallel: parallel,
+  client: client
+).run
