@@ -11,17 +11,17 @@ module HTTPClients
     end
     alias run_once_persistent run_once
 
-    def setup_parallel
+    def setup_concurrent
       @hydra = Typhoeus::Hydra.new max_concurrency: 5
     end
 
-    def run_once_parallel
+    def run_once_concurrent
       request = Typhoeus::Request.new(endpoint, ssl_verifypeer: false)
       @hydra.queue(request)
       request
     end
 
-    def fire_parallel
+    def fire_concurrent
       @hydra.run
     end
 
@@ -34,9 +34,5 @@ module HTTPClients
 
       response.code == 200
     end
-
-    private
-
-    attr_reader :endpoint, :persistent, :parallel
   end
 end

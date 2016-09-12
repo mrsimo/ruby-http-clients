@@ -10,7 +10,7 @@ require 'optparse'
 
 number     = 10
 persistent = false
-parallel   = false
+concurrent = false
 client     = nil
 
 parser = OptionParser.new do |opts|
@@ -20,12 +20,12 @@ parser = OptionParser.new do |opts|
     number = n
   end
 
-  opts.on("--persistent", "Try to use a persistent connection if supported by the client") do
+  opts.on("-p", "--persistent", "Try to use a persistent connection if supported by the client") do
     persistent = true
   end
 
-  opts.on("-p", "--parallel", "Try to fire requests in parallel") do
-    parallel = true
+  opts.on("-c", "--concurrent", "Try to fire requests in parallel") do
+    concurrent = true
   end
 
   opts.on("--client CLIENT", String, "Run just one client") do |c|
@@ -41,6 +41,6 @@ HTTPClients::Benchmark.new(
   endpoint,
   number: number,
   persistent: persistent,
-  parallel: parallel,
+  concurrent: concurrent,
   client: client
 ).run

@@ -3,11 +3,11 @@ require 'terminal-table'
 
 module HTTPClients
   class Benchmark
-    def initialize(endpoint, number:, persistent: false, parallel: false, client: nil)
+    def initialize(endpoint, number:, persistent: false, concurrent: false, client: nil)
       @endpoint   = endpoint
       @number     = number
       @persistent = persistent
-      @parallel   = parallel
+      @concurrent = concurrent
       @client     = client
       @table      = Terminal::Table.new(
         title: title,
@@ -28,21 +28,21 @@ module HTTPClients
         all_ok    = false
 
         total_time = ::Benchmark.realtime do
-          client.setup_parallel if parallel
+          client.setup_concurrent if concurrent
 
           number.times do
             times << ::Benchmark.realtime do
               if persistent
                 responses << client.run_once_persistent
-              elsif parallel
-                responses << client.run_once_parallel
+              elsif concurrent
+                responses << client.run_once_concurrent
               else
                 responses << client.run_once
               end
             end
           end
 
-          client.fire_parallel if parallel
+          client.fire_concurrent if concurrent
         end
 
         all_ok = responses.all? { |response| client.response_ok?(response) }
@@ -59,16 +59,16 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :number, :table, :persistent, :parallel, :client
+    attr_reader :endpoint, :number, :table, :persistent, :concurrent, :client
 
     def clients
       clients = [
-        NetHTTPClient.new(endpoint, persistent, parallel),
-        CurbClient.new(endpoint, persistent, parallel),
-        TyphoeusClient.new(endpoint, persistent, parallel),
-        RestClientClient.new(endpoint, persistent, parallel),
-        HTTPClient.new(endpoint, persistent, parallel),
-        ExconClient.new(endpoint, persistent, parallel),
+        NetHTTPClient.new(endpoint, persistent, concurrent),
+        CurbClient.new(endpoint, persistent, concurrent),
+        TyphoeusClient.new(endpoint, persistent, concurrent),
+        RestClientClient.new(endpoint, persistent, concurrent),
+        HTTPClient.new(endpoint, persistent, concurrent),
+        ExconClient.new(endpoint, persistent, concurrent),
       ]
 
       if client
@@ -80,8 +80,8 @@ module HTTPClients
 
     def title
       options =
-        if parallel
-          "in parallel "
+        if concurrent
+          "concurrently "
         elsif persistent
           "with persistent connection "
         else

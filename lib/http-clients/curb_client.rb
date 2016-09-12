@@ -22,12 +22,12 @@ module HTTPClients
       persistent_connection.status
     end
 
-    def setup_parallel
+    def setup_concurrent
       @multi = Curl::Multi.new
       @responses = {}
     end
 
-    def run_once_parallel
+    def run_once_concurrent
       curl = Curl::Easy.new(endpoint)
       curl.ssl_verify_peer = false
       curl.on_complete { |easy| @responses[curl] = easy }
@@ -35,7 +35,7 @@ module HTTPClients
       curl
     end
 
-    def fire_parallel
+    def fire_concurrent
       @multi.perform
     end
 
@@ -49,8 +49,6 @@ module HTTPClients
     end
 
     private
-
-    attr_reader :endpoint, :persistent, :parallel
 
     def persistent_connection
       @persistent_connection ||= Curl::Easy.new
