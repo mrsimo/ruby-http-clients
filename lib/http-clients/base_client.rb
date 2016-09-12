@@ -4,6 +4,7 @@ module HTTPClients
       @endpoint   = endpoint
       @persistent = persistent
       @parallel   = parallel
+      @uri        = URI.parse(endpoint)
     end
 
     def setup_parallel
@@ -16,6 +17,6 @@ module HTTPClients
 
     private
 
-    attr_reader :endpoint, :persistent, :parallel
+    attr_reader :endpoint, :persistent, :parallel, :uri
   end
 end

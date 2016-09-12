@@ -8,7 +8,6 @@ module HTTPClients
 
     def initialize(*)
       super
-      @uri      = URI.parse(endpoint)
       @ssl_mode = @uri.is_a?(URI::HTTPS)
     end
 
@@ -38,7 +37,7 @@ module HTTPClients
 
     private
 
-    attr_reader :uri, :ssl_mode
+    attr_reader :ssl_mode
 
     def persistent_connection
       @persistent_connection ||= begin

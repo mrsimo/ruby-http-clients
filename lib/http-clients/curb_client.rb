@@ -21,10 +21,31 @@ module HTTPClients
       persistent_connection.http_get
       persistent_connection.status
     end
-    alias run_once_parallel run_once_persistent
+
+    def setup_parallel
+      @multi = Curl::Multi.new
+      @responses = {}
+    end
+
+    def run_once_parallel
+      curl = Curl::Easy.new(endpoint)
+      curl.ssl_verify_peer = false
+      curl.on_complete { |easy| @responses[curl] = easy }
+      @multi.add(curl)
+      curl
+    end
+
+    def fire_parallel
+      @multi.perform
+    end
+
 
     def response_ok?(response)
-      response == OK_STATUS
+      if response.is_a?(String)
+        response == OK_STATUS
+      else 
+        @responses[response].status
+      end
     end
 
     private
