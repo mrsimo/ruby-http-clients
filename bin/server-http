@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd server
-bundle exec puma -e production
+bundle exec puma -e production -v
