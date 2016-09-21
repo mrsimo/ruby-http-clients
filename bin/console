@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
+$: << File.expand_path(File.join(__FILE__, "..", "..", "lib"))
 require "http-clients"
 
 # You can add fixtures and/or initialization code here to make experimenting
@@ -9,6 +10,33 @@ require "http-clients"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
+
+def in_ms(seconds)
+  "#{'%.2f' % (seconds * 1000).round(2)}ms"
+end
+
+
+def pp_typhoeus(response)
+  rows = response.options.to_a
+  rows.select! { |metric, value| metric.to_s.end_with?("time") }
+  rows.map! do |metric, value|
+    [
+      metric,
+      { value: in_ms(value), alignment: :right}
+    ]
+  end
+
+  puts Terminal::Table.new(rows: rows)
+end
+
+def endpoint
+  "http://localhost:3000/delay/50"
+end
+
+
+def ssl_endpoint
+  "https://localhost:3000/delay/50"
+end
 
 require "irb"
 IRB.start
