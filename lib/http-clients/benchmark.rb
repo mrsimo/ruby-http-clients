@@ -69,6 +69,7 @@ module HTTPClients
         RestClientClient.new(endpoint, persistent, concurrent),
         HTTPClient.new(endpoint, persistent, concurrent),
         ExconClient.new(endpoint, persistent, concurrent),
+        FaradayNetHttpClient.new(endpoint, persistent, concurrent),
       ]
 
       if client
