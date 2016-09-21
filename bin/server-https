@@ -4,4 +4,5 @@ cd server
 bundle exec puma \
   -e production \
   -v \
+  -w 4 \
   -b 'ssl://127.0.0.1:3000?key=certs/server.key&cert=certs/server.crt'
