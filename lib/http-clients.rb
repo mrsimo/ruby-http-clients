@@ -1,5 +1,3 @@
-require 'helpers'
-
 require 'http-clients/base_client'
 require 'http-clients/net_http_client'
 require 'http-clients/curb_client'
