@@ -22,6 +22,8 @@ module HTTPClients
     end
 
     def run
+      rows = []
+
       clients.each do |client|
         responses = []
         times     = []
@@ -47,12 +49,14 @@ module HTTPClients
 
         all_ok = responses.all? { |response| client.response_ok?(response) }
 
-        table << [
+        rows << [
           client.name,
           { value: in_ms(total_time / number), alignment: :right },
-          { value: in_ms(total_time), alignment: :right },
+          { raw: total_time, value: in_ms(total_time), alignment: :right },
           responses_ok(all_ok)]
       end
+
+      rows.sort_by { |row| row[2][:raw] }.each { |row| table << row }
 
       puts table
     end
