@@ -77,6 +77,14 @@ module HTTPClients
         clients.select! { |c| c.name == client }
       end
 
+      if persistent
+        clients.select! { |c| c.respond_to?(:run_once_persistent) }
+      end
+
+      if concurrent
+        clients.select! { |c| c.respond_to?(:run_once_concurrent) }
+      end
+
       clients
     end
 

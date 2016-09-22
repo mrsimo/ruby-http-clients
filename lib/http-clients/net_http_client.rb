@@ -29,7 +29,6 @@ module HTTPClients
     def run_once_persistent
       persistent_connection.request uri
     end
-    alias run_once_concurrent run_once_persistent
 
     def response_ok?(response)
       response.code == OK_STATUS

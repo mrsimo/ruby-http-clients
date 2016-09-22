@@ -13,7 +13,6 @@ module HTTPClients
     def run_once_persistent
       persistent_connection.get(uri.path, ssl_context: unsafe_context).tap(&:flush)
     end
-    alias run_once_concurrent run_once_persistent
 
     def response_ok?(response)
       response.code == 200

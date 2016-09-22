@@ -14,8 +14,6 @@ module HTTPClients
       connection.get(uri.path)
     end
 
-    alias run_once_concurrent run_once_persistent
-
     def response_ok?(response)
       response.status == 200
     end
