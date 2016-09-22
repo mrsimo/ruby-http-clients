@@ -83,6 +83,7 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    patron (0.8.0)
     pkg-config (1.1.7)
     puma (3.6.0)
     rack (2.0.1)
@@ -151,6 +152,7 @@ DEPENDENCIES
   faraday
   http
   net-http-persistent
+  patron
   puma
   rails
   rake
