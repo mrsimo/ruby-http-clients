@@ -35,13 +35,13 @@ different and your needs too. Keep reading this README for some more rambles.
 
 I'd be very happy to include more clients here, or fix any issues in my implementations.
 
-## `bin/benchmark` options
+## bin/benchmark
 
 * `-n, --number N`: Specify how many requests to run in total for each client.
 * `-p, --persistent`: Try to setup a persistent connection instead of individual requests.
 * `-c, --concurrent`: Try to run requests in a concurrent way. With Typhoeus, for example, it will run with a maximum concurrency of 5.
 
-## `bin/server-*`
+## bin/server-*
 
 You can easily boot a rails application to respond to these requests by running `bin/server-http` or `bin/server-https`. They'll
 be available under `localhost:3000` using Puma. For https, the certificate is self-signed.
