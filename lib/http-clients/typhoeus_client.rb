@@ -7,9 +7,13 @@ module HTTPClients
     end
 
     def run_once
+      Typhoeus::Pool.clear
       Typhoeus.get(endpoint, ssl_verifypeer: false)
     end
-    alias run_once_persistent run_once
+
+    def run_once_persistent
+      Typhoeus.get(endpoint, ssl_verifypeer: false)
+    end
 
     def setup_concurrent
       @hydra = Typhoeus::Hydra.new max_concurrency: 5
