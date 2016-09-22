@@ -43,7 +43,7 @@ GEM
     builder (3.2.2)
     byebug (9.0.5)
     concurrent-ruby (1.0.2)
-    curb (0.9.3)
+    curb (0.8.8)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
@@ -147,7 +147,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  curb
+  curb (= 0.8.8)
   excon
   faraday
   http
@@ -155,7 +155,6 @@ DEPENDENCIES
   patron
   puma
   rails
-  rake
   rest-client
   terminal-table
   typhoeus

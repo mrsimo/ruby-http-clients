@@ -33,9 +33,7 @@ different and your needs too. Keep reading this README for some more rambles.
 
 ## Contributing
 
-I'd be very happy to include more clients here, or fix any issues in my implementations. For
-instance, I've tried to get a persistent connection type of setup for curb, but I haven't been
-able to get it to work.
+I'd be very happy to include more clients here, or fix any issues in my implementations.
 
 ## `bin/benchmark` options
 

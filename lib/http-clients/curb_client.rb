@@ -16,8 +16,6 @@ module HTTPClients
     end
 
     def run_once_persistent
-      persistent_connection.ssl_verify_peer = false
-      persistent_connection.url = endpoint
       persistent_connection.http_get
       persistent_connection.status
     end
@@ -51,7 +49,12 @@ module HTTPClients
     private
 
     def persistent_connection
-      @persistent_connection ||= Curl::Easy.new
+      @persistent_connection ||= begin
+                                   curl = Curl::Easy.new
+                                   curl.url = endpoint
+                                   curl.ssl_verify_peer = false
+                                   curl
+                                 end
     end
   end
 end
