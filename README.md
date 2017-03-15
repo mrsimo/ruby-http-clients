@@ -28,7 +28,7 @@ Usage: bin/benchmark [options] URL
 
 * `-n, --number N`: Specify how many requests to run in total for each client.
 
-  ```
+```
 $ bin/benchmark -n100 https://localhost:3000/delay/50
 x==================x=============x=============x=============x
 |    100 requests against https://localhost:3000/delay/50    |
@@ -48,7 +48,7 @@ x==================x=============x=============x=============x
 
 * `-p, --persistent`: Try to setup a persistent connection instead of individual requests.
 
-  ```
+```
 $ bin/benchmark -n100 -p https://localhost:3000/delay/50
 x====================x====================x====================x====================x
 |  100 requests with persistent connection against https://localhost:3000/delay/50  |
@@ -67,7 +67,7 @@ x====================x====================x====================x================
 
 * `-c, --concurrent`: Try to run requests in a concurrent way. With Typhoeus, for example, it will run with a maximum concurrency of 5.
 
-  ```
+```
 $ bin/benchmark -n100 -c https://localhost:3000/delay/50
 x================x================x================x================x
 | 100 requests concurrently against https://localhost:3000/delay/50 |
