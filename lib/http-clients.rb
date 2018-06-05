@@ -8,6 +8,7 @@ require 'http-clients/excon_client'
 require 'http-clients/faraday_net_http_client'
 require 'http-clients/patron_client'
 require 'http-clients/benchmark'
+require 'http-clients/httparty_client'
 
 module HTTPClients
 end

@@ -64,6 +64,8 @@ GEM
       domain_name (~> 0.5)
     http-form_data (1.0.1)
     http_parser.rb (0.6.0)
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     kgio (2.10.0)
     loofah (2.0.3)
@@ -76,6 +78,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
@@ -151,6 +154,7 @@ DEPENDENCIES
   excon
   faraday
   http
+  httparty
   net-http-persistent
   patron
   puma
@@ -161,4 +165,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.12.5
+   1.16.1
